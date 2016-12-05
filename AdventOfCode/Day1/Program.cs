@@ -5,7 +5,7 @@ namespace Day1
 {
     public enum Directions { north, west, south, east };
 
-    class PartOne
+    class Program
     {
         public static string puzzleString = File.ReadAllText("puzzleInput.txt");
         public static Directions direction = Directions.north;

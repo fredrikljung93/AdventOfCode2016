@@ -2,7 +2,7 @@
 using System.IO;
 namespace Day3
 {
-    class PartOne
+    class Program
     {
         static void Main(string[] args)
         {

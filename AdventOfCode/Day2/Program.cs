@@ -3,7 +3,7 @@ using System.IO;
 
 namespace Day2
 {
-    class PartOne
+    class Program
     {
         static string puzzleInput = File.ReadAllText("puzzleInput.txt");
         static int[,] KeyPad = new int[3, 3] {  {1,2,3} ,
