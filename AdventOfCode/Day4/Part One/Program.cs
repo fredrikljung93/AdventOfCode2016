@@ -3,9 +3,9 @@ using System.Collections.Generic;
 using System.IO;
 using System.Text;
 
-namespace Four
+namespace Day4
 {
-    class Program
+    class PartOne
     {
         static void Main(string[] args)
         {

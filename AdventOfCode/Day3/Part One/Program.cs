@@ -1,8 +1,8 @@
 ﻿using System;
 using System.IO;
-namespace Three
+namespace Day3
 {
-    class Program
+    class PartOne
     {
         static void Main(string[] args)
         {
