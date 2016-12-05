@@ -11,6 +11,11 @@ namespace Day1
         public static Directions direction = Directions.north;
         public static int northSteps = 0;
         public static int eastSteps = 0;
+        public static bool doneFirstReturn = false;
+        public static int firstReturnNorth = 0;
+        public static int firstReturnEast = 0;
+
+        static bool[,] VisitMap = new bool[5000, 5000];
 
         static void Main(string[] args)
         {
@@ -21,11 +26,25 @@ namespace Day1
                 HandleInstruction(instruction);
             }
 
-            Console.WriteLine("North steps: " + northSteps);
-            Console.WriteLine("East steps: " + eastSteps);
-            int blocksAway = Math.Abs(northSteps) + Math.Abs(eastSteps);
-            Console.WriteLine("Blocks away: " + blocksAway);
+            int finalDestinationBlocksAway = Math.Abs(northSteps) + Math.Abs(eastSteps);
+            int firstReturnBlocksAway = Math.Abs(firstReturnNorth) + Math.Abs(firstReturnEast);
+            Console.WriteLine("Blocks away to final destination: " + finalDestinationBlocksAway);
+            Console.WriteLine("Blocks away to first return: " + firstReturnBlocksAway);
             Console.ReadLine();
+        }
+
+        static void CheckVisitMap()
+        {
+            if (!doneFirstReturn)
+            {
+                if (VisitMap[2500 - northSteps, 2500 - eastSteps])
+                {
+                    firstReturnEast = eastSteps;
+                    firstReturnNorth = northSteps;
+                    doneFirstReturn = true;
+                }
+                VisitMap[2500 - northSteps, 2500 - eastSteps] = true;
+            }
         }
 
         static void HandleInstruction(string instruction)
@@ -36,19 +55,37 @@ namespace Day1
             switch (direction)
             {
                 case Directions.north:
-                    eastSteps += goLeft ? (steps * -1) : steps;
+
+                    for (int i = 0; i < steps; i++)
+                    {
+                        eastSteps += goLeft ? -1 : 1;
+                        CheckVisitMap();
+                    }
                     direction = goLeft ? Directions.west : Directions.east;
                     break;
+
                 case Directions.west:
-                    northSteps += goLeft ? (steps * -1) : steps;
+                    for (int i = 0; i < steps; i++)
+                    {
+                        northSteps += goLeft ? -1 : 1;
+                        CheckVisitMap();
+                    }
                     direction = goLeft ? Directions.south : Directions.north;
                     break;
                 case Directions.south:
-                    eastSteps += goLeft ? steps : (steps * -1);
+                    for (int i = 0; i < steps; i++)
+                    {
+                        eastSteps += goLeft ? 1 : -1;
+                        CheckVisitMap();
+                    }
                     direction = goLeft ? Directions.east : Directions.west;
                     break;
                 case Directions.east:
-                    northSteps += goLeft ? steps : (steps * -1);
+                    for (int i = 0; i < steps; i++)
+                    {
+                        northSteps += goLeft ? 1 : -1;
+                        CheckVisitMap();
+                    }
                     direction = goLeft ? Directions.north : Directions.south;
                     break;
             }
